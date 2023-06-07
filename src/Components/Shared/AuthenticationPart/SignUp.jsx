@@ -9,19 +9,20 @@ const SignUp = () => {
 
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [error, setError] = useState('');
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    let pwd = watch("password");
+    // const [error, setError] = useState('');
 
     const onSubmit = data => {
-        console.log(data)
         if (data.password !== data.confirmPass) {
-            setError('Your password did not match')
+            // setError('Your password did not match')
             return
         }
         else if (data.password.length < 6) {
-            setError('password must be 6 characters or longer')
+            // setError('password must be 6 characters or longer')
             return
         }
+        console.log(data)
     }
 
     useEffect(() => {
@@ -38,8 +39,6 @@ const SignUp = () => {
 
                 <div className="m-6">
                     <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
-
-
                         <div data-aos="fade-left" className="mb-6">
                             <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Name</label>
                             <input type="text" {...register("name", { required: true })} name="name" placeholder="Name" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
@@ -51,21 +50,27 @@ const SignUp = () => {
                             {errors.email && <span className="text-red-600">Email is required</span>}
                         </div>
 
-
-
                         <div data-aos="fade-left" className="mb-6">
                             <div className="flex justify-between mb-2">
                                 <label className="text-sm text-gray-600 dark:text-gray-400">Password</label>
                             </div>
                             <div className="relative">
-                                <input type={showPass ? 'text' : 'password'} {...register("password", { required: true })} name="password" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                                <input type={showPass ? 'text' : 'password'} {...register("password", {
+                                    required: true,
+                                    minLength: 6,
+                                    maxLength: 18,
+                                    pattern: /(?=.*[0-9])/
+                                })} name="password" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                                 <p className='absolute bottom-3 right-3 cursor-pointer' onClick={() => setShowPass(!showPass)}>
                                     {
                                         showPass ? <FaEyeSlash /> : <FaEye />
                                     }
                                 </p>
                             </div>
-                            {errors.password && <span className="text-red-600">Password is required</span>}
+                            {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                            {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                            {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 18 characters</p>}
+                            {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one number character.</p>}
                         </div>
 
                         <div data-aos="fade-right" className="mb-6">
@@ -73,15 +78,26 @@ const SignUp = () => {
                                 <label className="text-sm text-gray-600 dark:text-gray-400">Password</label>
                             </div>
                             <div className="relative">
-                                <input type={showConfirmPass ? 'text' : 'password'} {...register("confirmPass", { required: true })} name="confirmPass" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                                <input type={showConfirmPass ? 'text' : 'password'} {...register("confirmPass", {
+                                    required: true,
+                                    minLength: 6,
+                                    maxLength: 18,
+                                    pattern: /(?=.*[0-9])/,
+                                    validate: value => value === pwd || "The passwords do not match"
+
+                                })} name="confirmPass" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                                 <p className='absolute bottom-3 right-3 cursor-pointer' onClick={() => setShowConfirmPass(!showConfirmPass)}>
                                     {
                                         showConfirmPass ? <FaEyeSlash /> : <FaEye />
                                     }
                                 </p>
                             </div>
-                            {errors.confirmPass && <span className="text-red-600">Confirm password is required</span>}
-                            <p data-aos="fade-left" className='text-red-600 '>{error}</p>
+                            {errors.confirmPass?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                            {errors.confirmPass?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                            {errors.confirmPass?.type === 'maxLength' && <p className="text-red-600">Password must be less than 18 characters</p>}
+                            {errors.confirmPass?.type === 'pattern' && <p className="text-red-600">Password must have one number character.</p>}
+                            {errors.confirmPass && <p className="text-red-600">{errors.confirmPass.message}</p>}
+
                         </div>
 
                         <div data-aos="fade-left" className="mb-6">
