@@ -1,17 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from './AuthProvider';
+import { updateProfile } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
 
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
     let pwd = watch("password");
-    // const [error, setError] = useState('');
+    const [error, setError] = useState('');
+    const notify = () => toast("User has created successfully!");
+    const notifyErr = () => toast("User created Unsuccessfully!");
+
+    const { createUser, GoogleLogin } = useContext(AuthContext);
+
+
+    const GoogleHandler = () => {
+        GoogleLogin()
+            .then(res => {
+                const user = res.user;
+                console.log(user);
+                setError('');
+                notify();
+            })
+            .catch((error) => {
+                console.error(error)
+                setError(error.message);
+                notifyErr()
+            });
+    }
+
 
     const onSubmit = data => {
         if (data.password !== data.confirmPass) {
@@ -22,8 +47,39 @@ const SignUp = () => {
             // setError('password must be 6 characters or longer')
             return
         }
-        console.log(data)
+        console.log(data);
+
+        createUser(data.email, data.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setError('');
+                reset();
+                notify()
+                updateUserData(result.user, data.name, data.PhotoURL);
+            })
+            .catch(Error => {
+                console.error(Error)
+                setError(Error.message);
+                notifyErr()
+            })
+
     }
+
+    const updateUserData = (user, name, photo) => {
+        updateProfile(user, {
+            displayName: name,
+            photoURL: photo
+        })
+            .then(() => {
+                // console.log('user name updated')
+            })
+            .catch(err => {
+                // console.log(err.message)
+                setError(err.message)
+            })
+    }
+
 
     useEffect(() => {
         AOS.init();
@@ -121,13 +177,14 @@ const SignUp = () => {
                     </div>
 
                     <div data-aos="fade-right" className="flex justify-center ">
-                        <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                        <button onClick={GoogleHandler} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
                             <div className="relative flex items-center space-x-10 justify-center">
                                 <img src="https://tailus.io/sources/blocks/social/preview/images/google.svg" className="absolute left-0 w-5" alt="google logo" />
                                 <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Continue with Google</span>
                             </div>
                         </button>
                     </div>
+                    <p data-aos="fade-left" className='text-blue-600 mt-5'>{error}</p>
                 </div>
             </div>
         </div>

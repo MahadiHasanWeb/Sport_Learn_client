@@ -1,17 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, } from 'react-router-dom';
+import { Link, useLocation, useNavigate, } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from './AuthProvider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
 
     const [showPass, setShowPass] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { signIn, GoogleLogin } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const onSubmit = data => {
-        console.log(data)
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'User Login Successful.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                navigate(from, { replace: true });
+            })
+    }
+
+    const handleGoogleSignIn = () => {
+        GoogleLogin()
+            .then(res => {
+                const user = res.user;
+                console.log(user);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'User Login Successful.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
     }
 
     useEffect(() => {
@@ -71,7 +104,7 @@ const Login = () => {
                     </div>
 
                     <div data-aos="fade-left" className="flex justify-center ">
-                        <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                        <button onClick={handleGoogleSignIn} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
                             <div className="relative flex items-center space-x-10 justify-center">
                                 <img src="https://tailus.io/sources/blocks/social/preview/images/google.svg" className="absolute left-0 w-5" alt="google logo" />
                                 <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Continue with Google</span>
