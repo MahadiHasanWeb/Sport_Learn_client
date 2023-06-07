@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 const Login = () => {
 
     const [showPass, setShowPass] = useState(false);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = data => {
         console.log(data)
@@ -30,20 +30,30 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
                         <div data-aos="fade-right" className="mb-6">
                             <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
-                            <input type="email" {...register("email", { required: true })} name="email" id="email" placeholder="Your email address" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required />
+                            <input type="email" {...register("email", { required: true })} name="email" id="email" placeholder="Your email address" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                            {errors.email && <span className="text-red-600">Email is required</span>}
                         </div>
                         <div data-aos="fade-left" className="mb-6">
                             <div className="flex justify-between mb-2">
                                 <label className="text-sm text-gray-600 dark:text-gray-400">Password</label>
                             </div>
                             <div className="relative">
-                                <input type={showPass ? 'text' : 'password'} {...register("password", { required: true })} name="password" id="password" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required />
+                                <input type={showPass ? 'text' : 'password'} {...register("password", {
+                                    required: true,
+                                    minLength: 6,
+                                    maxLength: 18,
+                                    pattern: /(?=.*[0-9])/
+                                })} name="password" id="password" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                                 <p className='absolute bottom-3 right-3 cursor-pointer' onClick={() => setShowPass(!showPass)}>
                                     {
                                         showPass ? <FaEyeSlash /> : <FaEye />
                                     }
                                 </p>
                             </div>
+                            {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                            {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                            {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 18 characters</p>}
+                            {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one number character.</p>}
                         </div>
 
                         <div data-aos="fade-right" className="mb-6">
