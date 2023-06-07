@@ -10,7 +10,7 @@ const Navbar = () => {
         <ActiveLink to="/">Dashboard</ActiveLink>
 
     </>
-    const navEnd = <> <Link to='/login' className="button button-primary bg-[#6F69AC] ms-4 md:ms-8">Login</Link>
+    const navEnd = <> <Link to='/login' className="button button-primary ms-4 md:ms-8">Login</Link>
     </>
 
     return (
