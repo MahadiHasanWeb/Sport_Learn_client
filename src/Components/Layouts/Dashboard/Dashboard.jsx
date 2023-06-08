@@ -24,35 +24,35 @@ const Dashboard = () => {
                             </li>
 
                             <li className="min-w-max">
-                                <Link to={'manageClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                                <Link to={'manageUsers'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                                     <FaUsers className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600" />
                                     <span className="group-hover:text-gray-700">Manage Users</span>
                                 </Link>
                             </li>
 
                             <li className="min-w-max">
-                                <Link to={'manageClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                                <Link to={'addClass'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                                     <FaFolderPlus className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600" />
                                     <span className="group-hover:text-gray-700">Add a Class</span>
                                 </Link>
                             </li>
 
                             <li className="min-w-max">
-                                <Link to={'manageClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                                <Link to={'myClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                                     <FaFolderOpen className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600" />
                                     <span className="group-hover:text-gray-700">My Classes</span>
                                 </Link>
                             </li>
 
                             <li className="min-w-max">
-                                <Link to={'manageClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                                <Link to={'selectedClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                                     <FaFolderOpen className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600" />
                                     <span className="group-hover:text-gray-700">Selected Classes</span>
                                 </Link>
                             </li>
 
                             <li className="min-w-max">
-                                <Link to={'manageClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                                <Link to={'enrolledClasses'} className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                                     <RiSecurePaymentFill className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600" />
                                     <span className="group-hover:text-gray-700">Enrolled Classes</span>
                                 </Link>

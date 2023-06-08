@@ -7,6 +7,11 @@ import Instructors from "../Page/Instructors";
 import Classes from "../Page/Classes";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import ManageClasses from "../Page/Dashboard/ManageClasses";
+import ManageUsers from "../Page/Dashboard/ManageUsers";
+import AddClass from "../Page/Dashboard/AddClass";
+import MyClasses from "../Page/Dashboard/MyClasses";
+import SelectedClasses from "../Page/Dashboard/SelectedClasses";
+import EnrolledClasses from "../Page/Dashboard/EnrolledClasses";
 
 export const router = createBrowserRouter([
     {
@@ -42,7 +47,27 @@ export const router = createBrowserRouter([
             {
                 path: 'manageClasses',
                 element: <ManageClasses></ManageClasses>
-            }
+            },
+            {
+                path: 'manageUsers',
+                element: <ManageUsers></ManageUsers>
+            },
+            {
+                path: 'addClass',
+                element: <AddClass></AddClass>
+            },
+            {
+                path: 'myClasses',
+                element: <MyClasses></MyClasses>
+            },
+            {
+                path: 'selectedClasses',
+                element: <SelectedClasses></SelectedClasses>
+            },
+            {
+                path: 'enrolledClasses',
+                element: <EnrolledClasses></EnrolledClasses>
+            },
         ]
     }
 ]);
