@@ -1,40 +1,48 @@
 import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from './AuthProvider';
-import { updateProfile } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
 
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
-
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
+
     let pwd = watch("password");
-    const [error, setError] = useState('');
-    const notify = () => toast("User has created successfully!");
-    const notifyErr = () => toast("User created Unsuccessfully!");
 
-    const { createUser, GoogleLogin } = useContext(AuthContext);
+    // const [error, setError] = useState('');
+    const notify = () => toast("User Login successfully!");
 
+    const { createUser, GoogleLogin, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const GoogleHandler = () => {
         GoogleLogin()
-            .then(res => {
-                const user = res.user;
-                console.log(user);
-                setError('');
-                notify();
+            .then(result => {
+                const loggedInUser = result.user;
+                console.log(loggedInUser);
+                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(saveUser)
+                })
+                    .then(res => res.json())
+                    .then(() => {
+                        notify();
+                        navigate(from, { replace: true });
+                    })
             })
-            .catch((error) => {
-                console.error(error)
-                setError(error.message);
-                notifyErr()
-            });
     }
 
 
@@ -49,37 +57,40 @@ const SignUp = () => {
         }
         console.log(data);
 
+
         createUser(data.email, data.password)
             .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                setError('');
-                reset();
-                notify()
-                updateUserData(result.user, data.name, data.PhotoURL);
-            })
-            .catch(Error => {
-                console.error(Error)
-                setError(Error.message);
-                notifyErr()
+
+                const loggedUser = result.user
+                console.log(loggedUser)
+                updateUserProfile(data.name, data.PhotoURL)
+                    .then(() => {
+                        const saveUser = { name: data.name, email: data.email }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'User created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/');
+                                }
+                            })
+                    })
             })
 
     }
-
-    const updateUserData = (user, name, photo) => {
-        updateProfile(user, {
-            displayName: name,
-            photoURL: photo
-        })
-            .then(() => {
-                // console.log('user name updated')
-            })
-            .catch(err => {
-                // console.log(err.message)
-                setError(err.message)
-            })
-    }
-
 
     useEffect(() => {
         AOS.init();
@@ -115,7 +126,7 @@ const SignUp = () => {
                                     required: true,
                                     minLength: 6,
                                     maxLength: 18,
-                                    pattern: /(?=.*[0-9])/
+                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/
                                 })} name="password" placeholder="Your password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-100 focus:border-blue-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                                 <p className='absolute bottom-3 right-3 cursor-pointer' onClick={() => setShowPass(!showPass)}>
                                     {
@@ -126,7 +137,7 @@ const SignUp = () => {
                             {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
                             {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
                             {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 18 characters</p>}
-                            {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one number character.</p>}
+                            {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase, one number and one special character.</p>}
                         </div>
 
                         <div data-aos="fade-right" className="mb-6">
@@ -184,7 +195,7 @@ const SignUp = () => {
                             </div>
                         </button>
                     </div>
-                    <p data-aos="fade-left" className='text-blue-600 mt-5'>{error}</p>
+                    {/* <p data-aos="fade-left" className='text-blue-600 mt-5'>{error}</p> */}
                 </div>
             </div>
         </div>

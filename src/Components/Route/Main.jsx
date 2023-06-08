@@ -3,6 +3,10 @@ import Layout from "../Layouts/Layout";
 import Home from "../Home/Home";
 import Login from "../Shared/AuthenticationPart/Login";
 import SignUp from "../Shared/AuthenticationPart/SignUp";
+import Instructors from "../Page/Instructors";
+import Classes from "../Page/Classes";
+import Dashboard from "../Layouts/Dashboard/Dashboard";
+import ManageClasses from "../Page/Dashboard/ManageClasses";
 
 export const router = createBrowserRouter([
     {
@@ -14,13 +18,31 @@ export const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login></Login>
             },
             {
-                path: '/signUp',
+                path: 'signUp',
                 element: <SignUp></SignUp>
+            },
+            {
+                path: 'instructors',
+                element: <Instructors></Instructors>
+            },
+            {
+                path: 'classes',
+                element: <Classes></Classes>
             },
         ]
     },
+    {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: 'manageClasses',
+                element: <ManageClasses></ManageClasses>
+            }
+        ]
+    }
 ]);

@@ -7,13 +7,11 @@ import Footer from "../Shared/Footer/Footer";
 const Layout = () => {
     return (
         <div>
-            <div className='my-container'>
-                <Navbar></Navbar>
-                <Outlet></Outlet>
-                <Footer></Footer>
-                <ScrollRestoration></ScrollRestoration>
-                <ToastContainer></ToastContainer>
-            </div>
+            <Navbar></Navbar>
+            <Outlet></Outlet>
+            <Footer></Footer>
+            <ScrollRestoration></ScrollRestoration>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

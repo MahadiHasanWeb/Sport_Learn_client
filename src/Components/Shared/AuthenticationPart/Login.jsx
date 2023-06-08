@@ -6,11 +6,16 @@ import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from './AuthProvider';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
     const [showPass, setShowPass] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const notify = () => toast("User Login successfully!");
+
+
     const { signIn, GoogleLogin } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,16 +39,22 @@ const Login = () => {
 
     const handleGoogleSignIn = () => {
         GoogleLogin()
-            .then(res => {
-                const user = res.user;
-                console.log(user);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'User Login Successful.',
-                    showConfirmButton: false,
-                    timer: 1500
+            .then(result => {
+                const loggedInUser = result.user;
+                console.log(loggedInUser);
+                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(saveUser)
                 })
+                    .then(res => res.json())
+                    .then(() => {
+                        notify();
+                        navigate(from, { replace: true });
+                    })
             })
     }
 

@@ -1,16 +1,27 @@
 import { Link } from "react-router-dom";
 import ActiveLink from "../ActiveLink/ActiveLink";
+import { useContext } from "react";
+import { AuthContext } from "../AuthenticationPart/AuthProvider";
 
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogOut = () => {
+        logOut().then().catch()
+    }
+
     const navItems = <>
         <ActiveLink to="/">Home</ActiveLink>
-        <ActiveLink to="/">Instructors</ActiveLink>
-        <ActiveLink to="/">Classes</ActiveLink>
-        <ActiveLink to="/">Dashboard</ActiveLink>
+        <ActiveLink to="/instructors">Instructors</ActiveLink>
+        <ActiveLink to="/classes">Classes</ActiveLink>
+        <ActiveLink to="/dashboard">Dashboard</ActiveLink>
 
     </>
-    const navEnd = <> <Link to='/login' className="button button-primary ms-4 md:ms-8">Login</Link>
+    const navEnd = <>
+        {user && <img title={user.displayName} className='w-[52px] md:w-[60px] rounded-full h-[52px] md:h-[60px]' src={user.photoURL} alt="" />}
+        {user ? <Link to='/' onClick={handleLogOut} className="button button-primary ms-4 md:ms-8">Log Out</Link> :
+            <Link to='/login' className="button button-primary ms-4 md:ms-8">Login</Link>}
     </>
 
     return (
@@ -25,7 +36,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <Link to="/" className="flex normal-case">
-                    <span className="self-center  text-2xl md:text-3xl font-semibold whitespace-nowrap text-blue-600">Sport Learn</span>
+                    <span className="self-center  text-[22px] md:text-3xl font-semibold whitespace-nowrap text-blue-600">Sport Learn</span>
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">

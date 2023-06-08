@@ -18,7 +18,7 @@ const Footer = () => {
                     <div className="md:flex md:justify-between">
                         <div data-aos="fade-up" className="mb-6 md:mb-0">
                             <a className="flex items-center">
-                                <span className="self-center text-2xl md:text-3xl font-semibold whitespace-nowrap  text-blue-600">ToyTrek</span>
+                                <span className="self-center text-2xl md:text-3xl font-semibold whitespace-nowrap  text-blue-600">Sport Learn</span>
                             </a>
                         </div>
                         <div data-aos="fade-up" className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
