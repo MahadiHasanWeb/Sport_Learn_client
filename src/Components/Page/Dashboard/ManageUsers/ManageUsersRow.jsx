@@ -5,12 +5,13 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 
-const ManageUsersRow = ({ RowData, refetch }) => {
+const ManageUsersRow = ({ RowData, refetch, index }) => {
     useEffect(() => {
         AOS.init();
     }, [])
 
     const { email, name, _id, role } = RowData;
+
 
 
     const handleMakeAdmin = RowData => {
@@ -23,9 +24,29 @@ const ManageUsersRow = ({ RowData, refetch }) => {
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'success',
                         title: `${RowData.name} is an Admin Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    }
+
+    const handleMakeInstructor = RowData => {
+        fetch(`http://localhost:5000/users/Instructor/${RowData._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${RowData.name} is an Instructor Now!`,
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -71,12 +92,17 @@ const ManageUsersRow = ({ RowData, refetch }) => {
 
     return (
         <tr className="hover" data-aos="fade-left">
-            <th></th>
+            <th>{index + 1}</th>
             <td>{name}</td>
             <td>{email}</td>
             <td>
                 {role === 'admin' ? 'Admin' :
-                    <button onClick={() => handleMakeAdmin(RowData)} className="button button-primary"><FaUserShield /></button>
+                    <button onClick={() => handleMakeAdmin(RowData)} className="button button-primary flex gap-2 items-center">Admin<FaUserShield /></button>
+                }
+            </td>
+            <td>
+                {role === 'Instructor' ? 'Instructor' :
+                    <button onClick={() => handleMakeInstructor(RowData)} className="button button-primary flex gap-2 items-center">Instructor<FaUserShield /></button>
                 }
             </td>
             <td>

@@ -28,17 +28,19 @@ const ManageUsers = () => {
                     {/* head */}
                     <thead data-aos="fade-left">
                         <tr >
-                            <th></th>
+                            <th>#</th>
                             <th>User Name</th>
                             <th>User Email</th>
                             <th>Role</th>
                             <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            userData?.map(RowData => <ManageUsersRow
+                            userData?.map((RowData, index) => <ManageUsersRow
                                 key={RowData._id}
+                                index={index}
                                 RowData={RowData}
                                 refetch={refetch}
                             ></ManageUsersRow>)
