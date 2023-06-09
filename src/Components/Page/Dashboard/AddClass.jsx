@@ -1,18 +1,20 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Shared/AuthenticationPart/AuthProvider";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const AddClass = () => {
-
+    const [axiosSecure] = useAxiosSecure();
     const imgHostingToken = import.meta.env.VITE_Image_Upload_Token
     const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${imgHostingToken}`
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { user } = useContext(AuthContext);
 
+    // Image Upload
     const onSubmit = data => {
-        // console.log(data)
         const formData = new FormData();
         formData.append('image', data.ClassImage[0])
 
@@ -26,12 +28,29 @@ const AddClass = () => {
                     const imgUrl = imgResponse.data.display_url;
                     const { availableSeats, className, instructorEmail, instructorName, price } = data;
 
-                    const newData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl }
+                    const newData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl, role: 'pending' }
                     console.log(newData)
+                    axiosSecure.post('/classes', newData)
+                        .then(data => {
+                            console.log('after posting new menu item', data.data)
+                            if (data.data.insertedId) {
+                                reset();
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Class added successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        })
                 }
             })
 
     }
+
+
+
 
     return (
         <div className="w-full mx-auto mb-8 bg-white dark:bg-gray-800 p-5 rounded-md shadow-sm min-h-screen">
