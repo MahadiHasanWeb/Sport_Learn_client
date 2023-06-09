@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ManageUsersRow from './ManageUsersRow';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 
 
@@ -10,17 +12,13 @@ const ManageUsers = () => {
         AOS.init();
     }, [])
 
-  
 
+    const [axiosSecure] = useAxiosSecure();
+    const { data: userData = [], refetch } = useQuery(['users'], async () => {
+        const res = await axiosSecure.get('/users')
+        return res.data;
+    })
 
-    const [userData, setUserData] = useState([])
-    // console.log(myToys)
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/users`)
-            .then(res => res.json())
-            .then(data => setUserData(data))
-    }, [])
 
     return (
         <div>
@@ -33,7 +31,7 @@ const ManageUsers = () => {
                             <th></th>
                             <th>User Name</th>
                             <th>User Email</th>
-                            <th>Action</th>
+                            <th>Role</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -42,8 +40,7 @@ const ManageUsers = () => {
                             userData?.map(RowData => <ManageUsersRow
                                 key={RowData._id}
                                 RowData={RowData}
-                                setUserData={setUserData}
-                                userData={userData}
+                                refetch={refetch}
                             ></ManageUsersRow>)
                         }
                     </tbody>

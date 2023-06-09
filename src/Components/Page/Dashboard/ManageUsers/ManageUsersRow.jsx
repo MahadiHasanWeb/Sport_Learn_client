@@ -1,25 +1,39 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FaTrashAlt, FaUserShield } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { AuthContext } from '../../../Shared/AuthenticationPart/AuthProvider';
 
-const ManageUsersRow = ({ RowData, setUserData, userData }) => {
+
+const ManageUsersRow = ({ RowData, refetch }) => {
     useEffect(() => {
         AOS.init();
     }, [])
 
-    const { user } = useContext(AuthContext);
+    const { email, name, _id, role } = RowData;
 
 
-    const handleMakeAdmin = id => {
-
+    const handleMakeAdmin = RowData => {
+        fetch(`http://localhost:5000/users/admin/${RowData._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${RowData.name} is an Admin Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
     }
 
 
-
-    const { email, name, _id } = RowData;
 
     const handleDelete = _id => {
         // console.log(id)
@@ -45,8 +59,7 @@ const ManageUsersRow = ({ RowData, setUserData, userData }) => {
                                 'Your Toy has been deleted.',
                                 'success'
                             )
-                            const remaining = userData.filter(user => user._id !== _id)
-                            setUserData(remaining)
+                            refetch()
                         }
                     })
                 // console.log(result)
@@ -62,8 +75,8 @@ const ManageUsersRow = ({ RowData, setUserData, userData }) => {
             <td>{name}</td>
             <td>{email}</td>
             <td>
-                {user?.role === 'admin' ? 'Admin' :
-                    <button onClick={() => handleMakeAdmin(_id)} className="button button-primary"><FaUserShield /></button>
+                {role === 'admin' ? 'Admin' :
+                    <button onClick={() => handleMakeAdmin(RowData)} className="button button-primary"><FaUserShield /></button>
                 }
             </td>
             <td>
