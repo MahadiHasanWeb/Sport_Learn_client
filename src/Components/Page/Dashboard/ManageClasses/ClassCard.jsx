@@ -1,8 +1,76 @@
+import Swal from "sweetalert2";
+import Modal from "./Modal";
 
 
-const ClassCard = ({ data }) => {
-    const { ClassImage, availableSeats, className, instructorEmail, instructorName, price, role } = data;
+const ClassCard = ({ data, refetch }) => {
+    const { ClassImage, availableSeats, className, instructorEmail, instructorName, price, role, _id } = data;
     console.log(data)
+
+
+    const handleApproved = _id => {
+        fetch(`http://localhost:5000/classes/approved/${_id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `Class Approved Successfully!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    }
+
+
+
+    const handleDenied = _id => {
+        fetch(`http://localhost:5000/classes/denied/${_id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `Class Denied Successfully!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    }
+
+
+    const handlePending = _id => {
+        fetch(`http://localhost:5000/classes/pending/${_id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `Class Pending Successfully!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    }
+
+
     return (
         <div className="card card-compact  bg-base-100 shadow-xl">
             <figure><img src={ClassImage} alt="Shoes" /></figure>
@@ -13,9 +81,13 @@ const ClassCard = ({ data }) => {
                 <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p>
                 <p><span className="font-semibold">Price:</span> ${price}</p>
                 <div className="card-actions">
-                    <button className="btn btn-success">Approved</button>
-                    <button disabled={role === 'pending'} className="btn btn-warning">Pending</button>
-                    <button className="btn btn-error">Denied</button>
+                    <button disabled={role === 'approved'} onClick={() => handleApproved(_id)} className="btn btn-success">Approved</button>
+                    <button disabled={role === 'pending'} onClick={() => handlePending(_id)} className="btn btn-warning">Pending</button>
+                    <button disabled={role === 'denied'} onClick={() => handleDenied(_id)} className="btn btn-error">Denied</button>
+
+                        <Modal />
+
+
                 </div>
             </div>
         </div>

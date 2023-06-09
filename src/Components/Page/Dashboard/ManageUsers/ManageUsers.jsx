@@ -23,7 +23,7 @@ const ManageUsers = () => {
     return (
         <div>
             <h1 className="text-center mb-8 text-4xl">Manage Users</h1>
-            <div className={`overflow-x-auto ${userData?.length < 6 ? 'h-screen' : ''}`}>
+            <div className={`overflow-x-auto ${userData?.length < 6 ? 'h-screen' : ''}`}> 
                 <table className="table w-full">
                     {/* head */}
                     <thead data-aos="fade-left">

@@ -106,7 +106,7 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
                 }
             </td>
             <td>
-                <button onClick={() => handleDelete(_id)} className="button button-primary"><FaTrashAlt /></button>
+                <button onClick={() => handleDelete(_id)} className="button button-primary"><FaTrashAlt /></button> 
             </td>
         </tr>
     );

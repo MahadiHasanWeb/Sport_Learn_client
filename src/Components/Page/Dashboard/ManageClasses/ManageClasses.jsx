@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
 import ClassCard from "./ClassCard";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const ManageClasses = () => {
 
-    const [classData, setClassData] = useState();
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/classes`)
-            .then(res => res.json())
-            .then(data => setClassData(data))
-    }, [])
+    const [axiosSecure] = useAxiosSecure();
+    const { data: classData = [], refetch } = useQuery(['classes'], async () => {
+        const res = await axiosSecure.get('/classes')
+        return res.data;
+    })
 
     return (
         <div className="grid md:grid-cols-2 gap-10 md:gap-x-10">
@@ -18,6 +17,7 @@ const ManageClasses = () => {
                 classData?.map(data => <ClassCard
                     key={data._id}
                     data={data}
+                    refetch={refetch}
                 ></ClassCard>)
             }
         </div>
