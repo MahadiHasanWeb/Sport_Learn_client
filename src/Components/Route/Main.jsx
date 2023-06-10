@@ -8,10 +8,10 @@ import Classes from "../Page/Classes";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import ManageClasses from "../Page/Dashboard/ManageClasses/ManageClasses";
 import AddClass from "../Page/Dashboard/AddClass";
-import MyClasses from "../Page/Dashboard/MyClasses";
 import SelectedClasses from "../Page/Dashboard/SelectedClasses";
 import EnrolledClasses from "../Page/Dashboard/EnrolledClasses";
 import ManageUsers from "../Page/Dashboard/ManageUsers/ManageUsers";
+import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
 
 export const router = createBrowserRouter([
     {
