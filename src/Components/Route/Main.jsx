@@ -3,7 +3,6 @@ import Layout from "../Layouts/Layout";
 import Home from "../Page/Home/Home";
 import Login from "../Shared/AuthenticationPart/Login";
 import SignUp from "../Shared/AuthenticationPart/SignUp";
-import Instructors from "../Page/Instructors";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import ManageClasses from "../Page/Dashboard/ManageClasses/ManageClasses";
 import AddClass from "../Page/Dashboard/AddClass";
@@ -12,6 +11,7 @@ import EnrolledClasses from "../Page/Dashboard/EnrolledClasses";
 import ManageUsers from "../Page/Dashboard/ManageUsers/ManageUsers";
 import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
 import ApprovedClasses from "../Page/Classes/ManageClasses/ApprovedClasses";
+import Instructors from "../Page/Instructors/Instructors";
 
 export const router = createBrowserRouter([
     {
