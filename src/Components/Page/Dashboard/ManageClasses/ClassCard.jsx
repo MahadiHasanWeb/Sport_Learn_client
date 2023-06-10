@@ -4,7 +4,7 @@ import Modal from "./Modal";
 
 const ClassCard = ({ data, refetch }) => {
     const { ClassImage, availableSeats, className, instructorEmail, instructorName, price, role, _id } = data;
-    console.log(data)
+
 
 
     const handleApproved = _id => {
@@ -13,7 +13,6 @@ const ClassCard = ({ data, refetch }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
@@ -35,7 +34,6 @@ const ClassCard = ({ data, refetch }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
@@ -56,7 +54,6 @@ const ClassCard = ({ data, refetch }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
@@ -85,7 +82,10 @@ const ClassCard = ({ data, refetch }) => {
                     <button disabled={role === 'pending'} onClick={() => handlePending(_id)} className="btn btn-warning">Pending</button>
                     <button disabled={role === 'denied'} onClick={() => handleDenied(_id)} className="btn btn-error">Denied</button>
 
-                        <Modal />
+                    <Modal
+                        refetch={refetch}
+                        data={data}
+                    ></Modal>
 
 
                 </div>
