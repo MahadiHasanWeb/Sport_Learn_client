@@ -12,14 +12,17 @@ const ManageClasses = () => {
     })
 
     return (
-        <div className="grid md:grid-cols-2 gap-10 md:gap-x-10">
-            {
-                classData?.map(data => <ClassCard
-                    key={data._id}
-                    data={data}
-                    refetch={refetch}
-                ></ClassCard>)
-            }
+        <div>
+            <h1 className="text-center text-gray-500 text-4xl font-semibold my-10">Manage Classes</h1>
+            <div className="grid md:grid-cols-2 gap-10 md:gap-x-10 mb-10">
+                {
+                    classData?.map(data => <ClassCard
+                        key={data._id}
+                        data={data}
+                        refetch={refetch}
+                    ></ClassCard>)
+                }
+            </div>
         </div>
     );
 };
