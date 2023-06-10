@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Shared/AuthenticationPart/AuthProvider";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import TitleCover from "../Home/TitleCover";
 
 
 const AddClass = () => {
@@ -55,8 +56,8 @@ const AddClass = () => {
     return (
         <div className="w-full mx-auto mb-8 bg-white dark:bg-gray-800 p-5 rounded-md shadow-sm min-h-screen">
             <div className="text-center">
-                <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Add a class</h1>
-                <p className="text-gray-400 dark:text-gray-400">Fill up the form below to add a class.</p>
+                <TitleCover heading='Add a class'></TitleCover>
+                <p className="">Fill up the form below to add a class.</p>
             </div>
             <div className="m-7">
                 <form onSubmit={handleSubmit(onSubmit)}>

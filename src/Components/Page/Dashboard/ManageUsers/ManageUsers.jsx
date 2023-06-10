@@ -4,6 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import TitleCover from '../../Home/TitleCover';
 
 
 
@@ -22,7 +23,7 @@ const ManageUsers = () => {
 
     return (
         <div>
-            <h1 className="text-center mb-8 text-4xl">Manage Users</h1>
+            <TitleCover heading='Manage Users'></TitleCover>
             <div className={`overflow-x-auto ${userData?.length < 6 ? 'h-screen' : ''}`}> 
                 <table className="table w-full">
                     {/* head */}

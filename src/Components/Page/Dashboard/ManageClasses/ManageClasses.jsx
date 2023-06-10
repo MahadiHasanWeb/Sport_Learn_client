@@ -1,6 +1,7 @@
 import ClassCard from "./ClassCard";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import TitleCover from "../../Home/TitleCover";
 
 
 const ManageClasses = () => {
@@ -13,7 +14,7 @@ const ManageClasses = () => {
 
     return (
         <div>
-            <h1 className="text-center text-gray-500 text-4xl font-semibold my-10">Manage Classes</h1>
+            <TitleCover heading='Manage Classes'></TitleCover>
             <div className="grid md:grid-cols-2 gap-10 md:gap-x-10 mb-10">
                 {
                     classData?.map(data => <ClassCard
