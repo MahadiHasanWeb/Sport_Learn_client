@@ -39,7 +39,6 @@ const SelectedRow = ({ RowData, refetch, index }) => {
                             refetch();
                         }
                     })
-                // console.log(result)
             }
 
         })
@@ -62,7 +61,7 @@ const SelectedRow = ({ RowData, refetch, index }) => {
             <td>{className}</td>
             <td>${price}</td>
             <td>
-                <Link ><button className="btn text-white button-primary">Payment</button></Link>
+                <Link to='/dashboard/payment'><button className="btn text-white button-primary">Payment</button></Link>
             </td>
             <td>
                 <button onClick={() => handleDelete(_id)} className="button button-primary"><FaTrashAlt /></button>

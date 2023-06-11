@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.sideBar a.active {
+  color: rgb(25 118 210);
+  
+}
+
 .my-container {
   @apply px-1 md:px-5 py-7 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-2xl lg:px-8 lg:py-12
 }

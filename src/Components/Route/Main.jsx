@@ -14,6 +14,8 @@ import ApprovedClasses from "../Page/Classes/ManageClasses/ApprovedClasses";
 import Instructors from "../Page/Instructors/Instructors";
 import UpdateClass from "../Page/Dashboard/MyClasses/updateClass/UpdateClass";
 import Error from "../Error/Error";
+import Payment from "../Page/Dashboard/Payment/Payment";
+
 
 export const router = createBrowserRouter([
     {
@@ -67,6 +69,10 @@ export const router = createBrowserRouter([
             {
                 path: 'selectedClasses',
                 element: <SelectedClasses></SelectedClasses>
+            },
+            {
+                path: 'payment',
+                element: <Payment></Payment>
             },
             {
                 path: 'enrolledClasses',
