@@ -21,8 +21,8 @@ const MyClasses = () => {
 
     return (
         <div>
-            <TitleCover heading='My Courses'></TitleCover>
-            {classData.length === 0 && <h1 className="text-center text-gray-500 text-5xl font-semibold my-24">Please add your course</h1>}
+            <TitleCover heading='My classes'></TitleCover>
+            {classData.length === 0 && <h1 className="text-center text-gray-500 text-5xl font-semibold my-24">Please add your class</h1>}
             <div className="grid md:grid-cols-2 gap-10 md:gap-x-10">
                 {
                     classData?.map(data => <MyClassCard
