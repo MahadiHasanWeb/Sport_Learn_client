@@ -12,13 +12,14 @@ const PopularInstructors = () => {
         return res.data;
     })
 
+    const Instructors = userData.filter(data => data.role === 'Instructor')
 
     return (
         <div>
             <TitleCover heading="Popular Instructors"></TitleCover>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-x-10 my-10">
                 {
-                    userData?.slice(0, 6).map(data => <PopularInstructorsCard
+                    Instructors?.slice(0, 6).map(data => <PopularInstructorsCard
                         key={data._id}
                         data={data}
                     ></PopularInstructorsCard>)

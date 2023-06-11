@@ -12,12 +12,14 @@ const Instructors = () => {
         return res.data;
     })
 
+    const Instructors = userData.filter(data => data.role === 'Instructor')
+
     return (
         <div>
             <TitleCover heading="Instructors"></TitleCover>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-x-10 my-10">
                 {
-                    userData?.map(data => <InstructorsCard
+                    Instructors?.map(data => <InstructorsCard
                         key={data._id}
                         data={data}
                     ></InstructorsCard>)

@@ -19,8 +19,6 @@ const MyClasses = () => {
     })
 
 
-    console.log(classData)
-
     return (
         <div>
             <TitleCover heading='My Courses'></TitleCover>
