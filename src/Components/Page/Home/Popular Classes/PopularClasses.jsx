@@ -12,7 +12,6 @@ const PopularClasses = () => {
     })
 
     const approveClass = classData.filter(data => data.role === 'approved')
-    // console.log(approveClass)
 
     return (
         <div className={`${approveClass.length > 0 ? '' : 'h-screen'}`}>

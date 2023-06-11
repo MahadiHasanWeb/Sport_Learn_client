@@ -6,7 +6,7 @@ import SignUp from "../Shared/AuthenticationPart/SignUp";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import ManageClasses from "../Page/Dashboard/ManageClasses/ManageClasses";
 import AddClass from "../Page/Dashboard/AddClass";
-import SelectedClasses from "../Page/Dashboard/SelectedClasses";
+import SelectedClasses from "../Page/Dashboard/SelectedClasses/SelectedClasses";
 import EnrolledClasses from "../Page/Dashboard/EnrolledClasses";
 import ManageUsers from "../Page/Dashboard/ManageUsers/ManageUsers";
 import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
