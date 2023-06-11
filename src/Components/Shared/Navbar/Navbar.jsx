@@ -5,6 +5,7 @@ import { AuthContext } from "../AuthenticationPart/AuthProvider";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstructors from "../../Hooks/useInstructors";
 import useStudent from "../../Hooks/useStudent";
+import useSelectedClass from "../../Hooks/useSelectedClass";
 
 
 const Navbar = () => {
@@ -17,12 +18,14 @@ const Navbar = () => {
     const [admin] = useAdmin();
     const [Instructors] = useInstructors();
     const [student] = useStudent();
+    const [selectedClass] = useSelectedClass()
 
     const navItems = <>
         <ActiveLink to="/">Home</ActiveLink>
         <ActiveLink to="/instructors">Instructors</ActiveLink>
         <ActiveLink to="/classes">Classes</ActiveLink>
-        <ActiveLink to={`${student && '/dashboard/selectedClasses' || Instructors && '/dashboard/addClass' || admin && '/dashboard/manageClasses'}`}>Dashboard</ActiveLink>
+        {!student && <ActiveLink to={`${Instructors && '/dashboard/addClass' || admin && '/dashboard/manageClasses' || !student && '/dashboard'}`}>Dashboard</ActiveLink>}
+        {student && < ActiveLink to={`${student && '/dashboard/selectedClasses'}`}>Dashboard {selectedClass && <sup className="font-semibold text-[15px]">{selectedClass?.length}</sup>}</ActiveLink>}
 
     </>
     const navEnd = <>

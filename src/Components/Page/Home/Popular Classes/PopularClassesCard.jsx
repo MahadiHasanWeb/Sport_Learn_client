@@ -2,6 +2,10 @@ import { useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Shared/AuthenticationPart/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
+import useStudent from "../../../Hooks/useStudent";
+import useAdmin from "../../../Hooks/useAdmin";
+import useInstructors from "../../../Hooks/useInstructors";
+import useSelectedClass from "../../../Hooks/useSelectedClass";
 
 
 const PopularClassesCard = ({ data }) => {
@@ -12,6 +16,12 @@ const PopularClassesCard = ({ data }) => {
     const location = useLocation();
 
     const { user } = useContext(AuthContext);
+    const [, refetch] = useSelectedClass();
+    const [student] = useStudent();
+    const [admin] = useAdmin();
+    const [Instructors] = useInstructors();
+
+    console.log(student)
 
     const handleEnroll = classData => {
         const { _id, className, ClassImage, price } = classData;
@@ -28,7 +38,7 @@ const PopularClassesCard = ({ data }) => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.insertedId) {
-                        // refetch(); // refetch cart to update the number of items in the cart
+                        refetch()
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
@@ -64,7 +74,7 @@ const PopularClassesCard = ({ data }) => {
                 <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p>
                 <p><span className="font-semibold">Price:</span> ${price}</p>
                 <div className="card-actions">
-                    <button onClick={() => handleEnroll(data)} className="button button-primary">Enroll Now</button>
+                    <button disabled={admin || Instructors} onClick={() => handleEnroll(data)} className="button button-primary">Enroll Now</button>
                 </div>
             </div>
         </div>
