@@ -13,11 +13,13 @@ import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
 import ApprovedClasses from "../Page/Classes/ManageClasses/ApprovedClasses";
 import Instructors from "../Page/Instructors/Instructors";
 import UpdateClass from "../Page/Dashboard/MyClasses/updateClass/UpdateClass";
+import Error from "../Error/Error";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout></Layout>,
+        errorElement: <Error></Error>,
         children: [
             {
                 path: '/',
@@ -44,6 +46,7 @@ export const router = createBrowserRouter([
     {
         path: "/dashboard",
         element: <Dashboard></Dashboard>,
+        errorElement: <Error></Error>,
         children: [
             {
                 path: 'manageClasses',

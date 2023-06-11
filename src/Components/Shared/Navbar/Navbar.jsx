@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import ActiveLink from "../ActiveLink/ActiveLink";
 import { useContext } from "react";
 import { AuthContext } from "../AuthenticationPart/AuthProvider";
+import useAdmin from "../../Hooks/useAdmin";
+import useInstructors from "../../Hooks/useInstructors";
+import useStudent from "../../Hooks/useStudent";
 
 
 const Navbar = () => {
@@ -11,11 +14,15 @@ const Navbar = () => {
         logOut().then().catch()
     }
 
+    const [admin] = useAdmin();
+    const [Instructors] = useInstructors();
+    const [student] = useStudent();
+
     const navItems = <>
         <ActiveLink to="/">Home</ActiveLink>
         <ActiveLink to="/instructors">Instructors</ActiveLink>
         <ActiveLink to="/classes">Classes</ActiveLink>
-        <ActiveLink to="/dashboard">Dashboard</ActiveLink>
+        <ActiveLink to={`${student && '/dashboard/selectedClasses' || Instructors && '/dashboard/addClass' || admin && '/dashboard/manageClasses'}`}>Dashboard</ActiveLink>
 
     </>
     const navEnd = <>

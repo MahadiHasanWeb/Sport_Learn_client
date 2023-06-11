@@ -1,8 +1,59 @@
+import { useContext } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../Shared/AuthenticationPart/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const PopularClassesCard = ({ data }) => {
+
     const { ClassImage, availableSeats, className, instructorName, price } = data;
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { user } = useContext(AuthContext);
+
+    const handleEnroll = classData => {
+        const { _id, className, ClassImage, price } = classData;
+        if (user && user.email) {
+            const selectedClass = { classId: _id, className, ClassImage, price, email: user.email }
+            console.log(selectedClass)
+            fetch('http://localhost:5000/selectedClass', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(selectedClass)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        // refetch(); // refetch cart to update the number of items in the cart
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Class added on the cart.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
+        }
+        else {
+            Swal.fire({
+                title: 'Please login to enroll in class',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login now!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location } })
+                }
+            })
+        }
+    }
 
     return (
         <div className="card card-compact  bg-base-100 shadow-xl">
@@ -13,7 +64,7 @@ const PopularClassesCard = ({ data }) => {
                 <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p>
                 <p><span className="font-semibold">Price:</span> ${price}</p>
                 <div className="card-actions">
-                    <button className="button button-primary">Enroll Now</button>
+                    <button onClick={() => handleEnroll(data)} className="button button-primary">Enroll Now</button>
                 </div>
             </div>
         </div>
