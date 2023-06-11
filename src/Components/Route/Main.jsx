@@ -12,6 +12,7 @@ import ManageUsers from "../Page/Dashboard/ManageUsers/ManageUsers";
 import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
 import ApprovedClasses from "../Page/Classes/ManageClasses/ApprovedClasses";
 import Instructors from "../Page/Instructors/Instructors";
+import UpdateClass from "../Page/Dashboard/MyClasses/updateClass/UpdateClass";
 
 export const router = createBrowserRouter([
     {
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
             {
                 path: 'enrolledClasses',
                 element: <EnrolledClasses></EnrolledClasses>
+            },
+            {
+                path: 'myClasses/update/:id',
+                element: <UpdateClass></UpdateClass>
             },
         ]
     }

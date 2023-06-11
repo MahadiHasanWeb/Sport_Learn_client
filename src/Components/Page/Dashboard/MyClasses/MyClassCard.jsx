@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 
 
 const MyClassCard = ({ data }) => {
-    const { ClassImage, availableSeats, className, price, role, feedback } = data;
+    const { ClassImage, availableSeats, className, price, role, feedback, _id } = data;
 
     console.log(role)
     return (
@@ -15,7 +16,7 @@ const MyClassCard = ({ data }) => {
                 {role === 'denied' && feedback && <p><span className="font-semibold">Feedback:</span> {feedback}</p>}
                 <div className="card-actions justify-between">
                     <p className="text-[16px]"><span className="font-semibold">Status:</span> <span className={`${role === 'denied' ? 'text-red-500' : '' || role === 'approved' ? 'text-green-500' : '' || role === 'pending' ? 'text-yellow-800' : ''}`}>{role}</span></p>
-                    <button className="button button-primary">Update</button>
+                    <Link to={`update/${_id}`} className="button button-primary">Update</Link>
                 </div>
             </div>
         </div>
