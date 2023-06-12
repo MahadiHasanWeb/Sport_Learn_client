@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Shared/AuthenticationPart/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import useStudent from "../../../Hooks/useStudent";
+// import useStudent from "../../../Hooks/useStudent";
 import useAdmin from "../../../Hooks/useAdmin";
 import useInstructors from "../../../Hooks/useInstructors";
 import useSelectedClass from "../../../Hooks/useSelectedClass";
@@ -17,18 +17,15 @@ const PopularClassesCard = ({ data }) => {
 
     const { user } = useContext(AuthContext);
     const [, refetch] = useSelectedClass();
-    const [student] = useStudent();
+    // const [student] = useStudent();
     const [admin] = useAdmin();
     const [Instructors] = useInstructors();
-
-    console.log(student)
 
     const handleEnroll = classData => {
         const { _id, className, ClassImage, price } = classData;
         if (user && user.email) {
             const selectedClass = { classId: _id, className, ClassImage, price, email: user.email }
-            console.log(selectedClass)
-            fetch('http://localhost:5000/selectedClass', {
+            fetch('https://sports-server-zeta.vercel.app/selectedClass', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

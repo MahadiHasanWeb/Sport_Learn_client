@@ -15,12 +15,11 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
 
 
     const handleMakeAdmin = RowData => {
-        fetch(`http://localhost:5000/users/admin/${RowData._id}`, {
+        fetch(`https://sports-server-zeta.vercel.app/users/admin/${RowData._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
@@ -35,12 +34,11 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
     }
 
     const handleMakeInstructor = RowData => {
-        fetch(`http://localhost:5000/users/Instructor/${RowData._id}`, {
+        fetch(`https://sports-server-zeta.vercel.app/users/Instructor/${RowData._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.modifiedCount) {
                     refetch();
                     Swal.fire({
@@ -57,7 +55,6 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
 
 
     const handleDelete = _id => {
-        // console.log(id)
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -68,12 +65,11 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/users/${_id}`, {
+                fetch(`https://sports-server-zeta.vercel.app/users/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
                     .then(data => {
-                        // console.log(data)
                         if (data.deletedCount > 0) {
                             Swal.fire(
                                 'Deleted!',
@@ -83,7 +79,6 @@ const ManageUsersRow = ({ RowData, refetch, index }) => {
                             refetch()
                         }
                     })
-                // console.log(result)
             }
         })
     }

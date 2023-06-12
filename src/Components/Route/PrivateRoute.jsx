@@ -8,8 +8,8 @@ const PrivateRoute = ({ children }) => {
     const notify = () => toast("Please Login!");
     const { user, loading } = useContext(AuthContext);
     const location = useLocation();
-    console.log(loading)
-    console.log(user)
+    // console.log(loading)
+    // console.log(user)
     if (loading) {
         return <div className="flex items-center h-screen justify-center min-h-screen p-5 bg-gray-100 min-w-screen">
             <div className="flex space-x-2 animate-pulse">

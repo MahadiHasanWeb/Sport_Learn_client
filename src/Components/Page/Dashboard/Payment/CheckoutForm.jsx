@@ -43,7 +43,6 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
         })
 
         if (error) {
-            console.log('error', error)
             setCardError(error.message);
         }
         else {
@@ -85,7 +84,6 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
             }
             axiosSecure.post('/payments', payment)
                 .then(res => {
-                    console.log(res.data);
                     if (res.data.insertResult.insertedId) {
                         refetch();
                         Swal.fire({

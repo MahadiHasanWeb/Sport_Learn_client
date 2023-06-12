@@ -28,9 +28,8 @@ const SignUp = () => {
         GoogleLogin()
             .then(result => {
                 const loggedInUser = result.user;
-                console.log(loggedInUser);
                 const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, image: loggedInUser.photoURL }
-                fetch('http://localhost:5000/users', {
+                fetch('https://sports-server-zeta.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -55,7 +54,6 @@ const SignUp = () => {
             // setError('password must be 6 characters or longer')
             return
         }
-        console.log(data);
 
 
         createUser(data.email, data.password)
@@ -66,7 +64,7 @@ const SignUp = () => {
                 updateUserProfile(data.name, data.PhotoURL)
                     .then(() => {
                         const saveUser = { name: data.name, email: data.email, image: data.PhotoURL }
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://sports-server-zeta.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

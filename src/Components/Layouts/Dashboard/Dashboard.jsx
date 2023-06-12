@@ -14,8 +14,6 @@ const Dashboard = () => {
     const [Instructors] = useInstructors();
     const [student] = useStudent();
 
-    console.log(Instructors)
-
     return (
         <>
             <Navbar></Navbar>

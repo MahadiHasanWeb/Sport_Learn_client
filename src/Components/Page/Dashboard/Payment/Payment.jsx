@@ -20,7 +20,6 @@ const Payment = () => {
 
     const { price } = classDataForPay;
     const payAblePrice = parseFloat(price)
-    console.log(payAblePrice)
 
     return (
         <div>

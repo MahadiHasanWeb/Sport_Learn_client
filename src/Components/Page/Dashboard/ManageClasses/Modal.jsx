@@ -10,15 +10,13 @@ const Modal = ({ refetch, data }) => {
     const [URL, setURL] = useState();
 
     const handleFeedbackId = _id => {
-        const url = `http://localhost:5000/classes/feedback/${_id}`
+        const url = `https://sports-server-zeta.vercel.app/classes/feedback/${_id}`
         setURL(url)
     }
 
 
 
     const handleFeedback = _id => {
-
-        console.log(_id)
         fetch(URL, {
             method: 'PATCH',
             headers: {

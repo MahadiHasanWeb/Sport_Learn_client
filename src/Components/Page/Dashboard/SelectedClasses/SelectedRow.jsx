@@ -14,7 +14,6 @@ const SelectedRow = ({ RowData, refetch, index }) => {
     const { className, ClassImage, price, _id } = RowData;
 
     const handleDelete = _id => {
-        // console.log(id)
         Swal.fire({
             title: 'Are you sure?',
             icon: 'warning',
@@ -24,12 +23,11 @@ const SelectedRow = ({ RowData, refetch, index }) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/selectedClass/${_id}`, {
+                fetch(`https://sports-server-zeta.vercel.app/selectedClass/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
                     .then(data => {
-                        // console.log(data)
                         if (data.deletedCount > 0) {
                             Swal.fire(
                                 'Deleted!',

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const MyClassCard = ({ data }) => {
     const { ClassImage, availableSeats, className, price, role, feedback, _id, Enrolled } = data;
 
-    console.log(role)
     return (
         <div className="card card-compact  bg-base-100 shadow-xl">
             <figure><img src={ClassImage} alt="Shoes" /></figure>

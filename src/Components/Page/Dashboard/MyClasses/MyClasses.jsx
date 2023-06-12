@@ -10,8 +10,6 @@ const MyClasses = () => {
 
     const { user } = useContext(AuthContext);
 
-    console.log(user)
-
     const [axiosSecure] = useAxiosSecure();
     const { data: classData = [] } = useQuery([`/classes/${user?.email}`], async () => {
         const res = await axiosSecure.get(`/classes/${user?.email}`)

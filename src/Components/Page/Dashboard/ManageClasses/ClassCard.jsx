@@ -8,7 +8,7 @@ const ClassCard = ({ data, refetch }) => {
 
 
     const handleApproved = _id => {
-        fetch(`http://localhost:5000/classes/approved/${_id}`, {
+        fetch(`https://sports-server-zeta.vercel.app/classes/approved/${_id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
@@ -29,7 +29,7 @@ const ClassCard = ({ data, refetch }) => {
 
 
     const handleDenied = _id => {
-        fetch(`http://localhost:5000/classes/denied/${_id}`, {
+        fetch(`https://sports-server-zeta.vercel.app/classes/denied/${_id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
@@ -49,7 +49,7 @@ const ClassCard = ({ data, refetch }) => {
 
 
     const handlePending = _id => {
-        fetch(`http://localhost:5000/classes/pending/${_id}`, {
+        fetch(`https://sports-server-zeta.vercel.app/classes/pending/${_id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())

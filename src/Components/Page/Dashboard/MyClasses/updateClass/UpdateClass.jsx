@@ -36,10 +36,8 @@ const UpdateClass = () => {
                     const { availableSeats, className, instructorEmail, instructorName, price } = data;
 
                     const updateData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl, role: 'pending' }
-                    console.log(updateData)
                     axiosSecure.put(`/myClasses/update/${_id}`, updateData)
                         .then(data => {
-                            console.log(data.data)
                             if (data.data.modifiedCount) {
                                 refetch();
                                 Swal.fire({
