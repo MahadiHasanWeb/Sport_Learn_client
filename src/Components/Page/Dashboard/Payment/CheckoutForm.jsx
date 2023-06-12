@@ -2,16 +2,18 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Shared/AuthenticationPart/AuthProvider";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
-const CheckoutForm = ({ cart, price }) => {
+const CheckoutForm = ({ classDataForPay, refetch, price }) => {
+    const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useContext(AuthContext);
     const [axiosSecure] = useAxiosSecure()
     const [cardError, setCardError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
-    const [processing, setProcessing] = useState(false);
     const [transactionId, setTransactionId] = useState('');
 
     useEffect(() => {
@@ -22,12 +24,11 @@ const CheckoutForm = ({ cart, price }) => {
                     setClientSecret(res.data.clientSecret);
                 })
         }
-    }, [price, axiosSecure])
+    }, [])
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         if (!stripe || !elements) {
             return
         }
@@ -48,10 +49,9 @@ const CheckoutForm = ({ cart, price }) => {
         }
         else {
             setCardError('');
-            // console.log('payment method', paymentMethod)
         }
 
-        setProcessing(true)
+
 
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
             clientSecret,
@@ -70,27 +70,32 @@ const CheckoutForm = ({ cart, price }) => {
             console.log(confirmError);
         }
 
-        console.log('payment intent', paymentIntent)
-        setProcessing(false)
         if (paymentIntent.status === 'succeeded') {
             setTransactionId(paymentIntent.id);
             // save payment information to the server
             const payment = {
                 email: user?.email,
+                name: user?.displayName,
                 transactionId: paymentIntent.id,
                 price,
                 date: new Date(),
-                quantity: cart.length,
-                cartItems: cart.map(item => item._id),
-                menuItems: cart.map(item => item.menuItemId),
-                status: 'service pending',
-                itemNames: cart.map(item => item.name)
+                classId: classDataForPay.classId,
+                selectedId: classDataForPay._id,
+                className: classDataForPay.className,
             }
             axiosSecure.post('/payments', payment)
                 .then(res => {
                     console.log(res.data);
-                    if (res.data.result.insertedId) {
-                        // display confirm
+                    if (res.data.insertResult.insertedId) {
+                        refetch();
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Payment Succeeded.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate('/dashboard/enrolledClasses')
                     }
                 })
         }
@@ -100,7 +105,7 @@ const CheckoutForm = ({ cart, price }) => {
 
     return (
         <>
-            <form className="w-2/3 m-8" onSubmit={handleSubmit}>
+            <form className="m-8" onSubmit={handleSubmit}>
                 <CardElement
                     options={{
                         style: {
@@ -117,7 +122,7 @@ const CheckoutForm = ({ cart, price }) => {
                         },
                     }}
                 />
-                <button className="btn btn-primary btn-sm mt-4" type="submit" /* disabled={!stripe || !clientSecret || processing} */>
+                <button className="btn text-white button-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret }>
                     Pay
                 </button>
             </form>

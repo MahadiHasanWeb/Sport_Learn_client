@@ -15,6 +15,7 @@ import Instructors from "../Page/Instructors/Instructors";
 import UpdateClass from "../Page/Dashboard/MyClasses/updateClass/UpdateClass";
 import Error from "../Error/Error";
 import Payment from "../Page/Dashboard/Payment/Payment";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -41,7 +42,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'classes',
-                element: <ApprovedClasses></ApprovedClasses>
+                element: <PrivateRoute><ApprovedClasses></ApprovedClasses></PrivateRoute>
             },
         ]
     },
@@ -71,7 +72,7 @@ export const router = createBrowserRouter([
                 element: <SelectedClasses></SelectedClasses>
             },
             {
-                path: 'payment',
+                path: 'selectedClasses/payment/:id',
                 element: <Payment></Payment>
             },
             {

@@ -61,7 +61,7 @@ const SelectedRow = ({ RowData, refetch, index }) => {
             <td>{className}</td>
             <td>${price}</td>
             <td>
-                <Link to='/dashboard/payment'><button className="btn text-white button-primary">Payment</button></Link>
+                <Link to={`/dashboard/selectedClasses/payment/${_id}`}><button className="btn text-white button-primary">Payment</button></Link>
             </td>
             <td>
                 <button onClick={() => handleDelete(_id)} className="button button-primary"><FaTrashAlt /></button>
