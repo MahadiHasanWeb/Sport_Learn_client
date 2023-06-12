@@ -24,7 +24,8 @@ const Navbar = () => {
         <ActiveLink to="/">Home</ActiveLink>
         <ActiveLink to="/instructors">Instructors</ActiveLink>
         <ActiveLink to="/classes">Classes</ActiveLink>
-        {!student && <ActiveLink to={`${Instructors && '/dashboard/addClass' || admin && '/dashboard/manageClasses' || !student && '/dashboard'}`}>Dashboard</ActiveLink>}
+        {admin && <ActiveLink to={`${admin && '/dashboard/manageClasses'}`}>Dashboard</ActiveLink>}
+        {Instructors && <ActiveLink to={`${Instructors && '/dashboard/addClass'}`}>Dashboard</ActiveLink>}
         {student && < ActiveLink to={`${student && '/dashboard/selectedClasses'}`}>Dashboard {selectedClass && <sup className="font-semibold text-[15px]">{selectedClass?.length}</sup>}</ActiveLink>}
 
     </>

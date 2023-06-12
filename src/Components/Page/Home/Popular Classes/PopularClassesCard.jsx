@@ -10,7 +10,7 @@ import useSelectedClass from "../../../Hooks/useSelectedClass";
 
 const PopularClassesCard = ({ data }) => {
 
-    const { ClassImage, availableSeats, className, instructorName, price } = data;
+    const { ClassImage, availableSeats, className, instructorName, price , Enrolled} = data;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -71,7 +71,8 @@ const PopularClassesCard = ({ data }) => {
             <div className="card-body">
                 <h2 className="card-title">{className}</h2>
                 <p><span className="font-semibold">Instructor Name:</span> {instructorName}</p>
-                <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p>
+                <p><span className="font-semibold">Total Enrolled Students:</span> {Enrolled}</p>
+                <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p> 
                 <p><span className="font-semibold">Price:</span> ${price}</p>
                 <div className="card-actions">
                     <button disabled={admin || Instructors} onClick={() => handleEnroll(data)} className="button button-primary">Enroll Now</button>

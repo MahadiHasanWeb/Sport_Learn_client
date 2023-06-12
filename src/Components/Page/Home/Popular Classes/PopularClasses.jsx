@@ -29,7 +29,7 @@ const PopularClasses = () => {
                 }
             </div>
         </div>
-
+ 
     );
 };
 

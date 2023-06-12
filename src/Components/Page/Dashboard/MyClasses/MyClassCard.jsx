@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 const MyClassCard = ({ data }) => {
-    const { ClassImage, availableSeats, className, price, role, feedback, _id } = data;
+    const { ClassImage, availableSeats, className, price, role, feedback, _id, Enrolled } = data;
 
     console.log(role)
     return (
@@ -10,7 +10,7 @@ const MyClassCard = ({ data }) => {
             <figure><img src={ClassImage} alt="Shoes" /></figure>
             <div className="card-body">
                 <h2 className="card-title">{className}</h2>
-                <p><span className="font-semibold">Total Enrolled Students:</span> 0</p>
+                <p><span className="font-semibold">Total Enrolled Students:</span> {Enrolled}</p>
                 <p><span className="font-semibold">Available Seats:</span> {availableSeats}</p>
                 <p><span className="font-semibold">Price:</span> ${price}</p>
                 {role === 'denied' && feedback && <p><span className="font-semibold">Feedback:</span> {feedback}</p>}

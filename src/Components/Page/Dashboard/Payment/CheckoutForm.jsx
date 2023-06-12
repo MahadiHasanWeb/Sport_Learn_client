@@ -20,11 +20,10 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
         if (price > 0) {
             axiosSecure.post('/create-payment-intent', { price })
                 .then(res => {
-                    console.log(res.data.clientSecret)
                     setClientSecret(res.data.clientSecret);
                 })
         }
-    }, [])
+    }, [price, axiosSecure])
 
 
     const handleSubmit = async (event) => {
@@ -72,7 +71,7 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
 
         if (paymentIntent.status === 'succeeded') {
             setTransactionId(paymentIntent.id);
-            // save payment information to the server
+
             const payment = {
                 email: user?.email,
                 name: user?.displayName,
@@ -82,6 +81,7 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
                 classId: classDataForPay.classId,
                 selectedId: classDataForPay._id,
                 className: classDataForPay.className,
+                ClassImage: classDataForPay.ClassImage,
             }
             axiosSecure.post('/payments', payment)
                 .then(res => {
@@ -122,12 +122,12 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
                         },
                     }}
                 />
-                <button className="btn text-white button-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret }>
+                <button className="btn text-white button-primary btn-sm mt-4" type="submit">
                     Pay
                 </button>
             </form>
             {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
-            {transactionId && <p className="text-green-500">Transaction complete with transactionId: {transactionId}</p>}
+            {transactionId && <p className="text-blue-500">Transaction complete with transactionId: {transactionId}</p>}
         </>
     );
 };

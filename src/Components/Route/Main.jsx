@@ -7,7 +7,7 @@ import Dashboard from "../Layouts/Dashboard/Dashboard";
 import ManageClasses from "../Page/Dashboard/ManageClasses/ManageClasses";
 import AddClass from "../Page/Dashboard/AddClass";
 import SelectedClasses from "../Page/Dashboard/SelectedClasses/SelectedClasses";
-import EnrolledClasses from "../Page/Dashboard/EnrolledClasses";
+import EnrolledClasses from "../Page/Dashboard/EnrolledClasses/EnrolledClasses";
 import ManageUsers from "../Page/Dashboard/ManageUsers/ManageUsers";
 import MyClasses from "../Page/Dashboard/MyClasses/MyClasses";
 import ApprovedClasses from "../Page/Classes/ManageClasses/ApprovedClasses";
@@ -15,7 +15,6 @@ import Instructors from "../Page/Instructors/Instructors";
 import UpdateClass from "../Page/Dashboard/MyClasses/updateClass/UpdateClass";
 import Error from "../Error/Error";
 import Payment from "../Page/Dashboard/Payment/Payment";
-import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -42,7 +41,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'classes',
-                element: <PrivateRoute><ApprovedClasses></ApprovedClasses></PrivateRoute>
+                element: <ApprovedClasses></ApprovedClasses>
             },
         ]
     },
