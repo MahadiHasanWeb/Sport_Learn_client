@@ -27,9 +27,11 @@ const AddClass = () => {
             .then(imgResponse => {
                 if (imgResponse.success) {
                     const imgUrl = imgResponse.data.display_url;
-                    const { availableSeats, className, instructorEmail, instructorName, price } = data;
+                    const price = parseFloat(data.price)
+                    const availableSeats = parseFloat(data.availableSeats)
 
-                    const newData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl, role: 'pending' , Enrolled: 0}
+                    const { /* availableSeats, */ className, instructorEmail, instructorName, /* price */ } = data;
+                    const newData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl, role: 'pending', Enrolled: 0 }
                     console.log(newData)
                     axiosSecure.post('/classes', newData)
                         .then(data => {
@@ -79,7 +81,7 @@ const AddClass = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5">
                         <div className="relative h-12 mb-6">
                             <input type="number" {...register("availableSeats", { required: true })} className="peer add-input" placeholder=" " />
-                            <label className="input-level">Available seats</label> 
+                            <label className="input-level">Available seats</label>
                             {errors.availableSeats && <span className="text-red-600">Available seats is required</span>}
                         </div>
 

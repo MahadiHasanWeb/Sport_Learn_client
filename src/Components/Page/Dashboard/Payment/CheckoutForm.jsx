@@ -71,7 +71,7 @@ const CheckoutForm = ({ classDataForPay, refetch, price }) => {
         if (paymentIntent.status === 'succeeded') {
             setTransactionId(paymentIntent.id);
 
-            const payment = {
+            const payment = { 
                 email: user?.email,
                 name: user?.displayName,
                 transactionId: paymentIntent.id,

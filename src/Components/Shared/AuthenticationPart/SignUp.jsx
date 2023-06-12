@@ -16,7 +16,7 @@ const SignUp = () => {
 
     let pwd = watch("password");
 
-    // const [error, setError] = useState('');
+    const [error, setError] = useState('');
     const notify = () => toast("User Login successfully!");
 
     const { createUser, GoogleLogin, updateUserProfile } = useContext(AuthContext);
@@ -47,13 +47,14 @@ const SignUp = () => {
 
     const onSubmit = data => {
         if (data.password !== data.confirmPass) {
-            // setError('Your password did not match')
+            setError('Your password did not match')
             return
         }
         else if (data.password.length < 6) {
-            // setError('password must be 6 characters or longer')
+            setError('password must be 6 characters or longer')
             return
         }
+
 
 
         createUser(data.email, data.password)
@@ -193,7 +194,7 @@ const SignUp = () => {
                             </div>
                         </button>
                     </div>
-                    {/* <p data-aos="fade-left" className='text-blue-600 mt-5'>{error}</p> */}
+                    <p data-aos="fade-left" className='text-blue-600 mt-5'>{error}</p>
                 </div>
             </div>
         </div>

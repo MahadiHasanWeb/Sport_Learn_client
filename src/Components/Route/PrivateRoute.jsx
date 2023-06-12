@@ -12,14 +12,14 @@ const PrivateRoute = ({ children }) => {
     // console.log(user)
     if (loading) {
         return <div className="flex items-center h-screen justify-center min-h-screen p-5 bg-gray-100 min-w-screen">
-            <div className="flex space-x-2 animate-pulse">
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-            </div>
+        <div className="flex space-x-2 animate-pulse">
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
         </div>
+    </div>
     }
 
     if (user) {

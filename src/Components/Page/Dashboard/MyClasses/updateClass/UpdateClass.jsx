@@ -33,7 +33,11 @@ const UpdateClass = () => {
             .then(imgResponse => {
                 if (imgResponse.success) {
                     const imgUrl = imgResponse.data.display_url;
-                    const { availableSeats, className, instructorEmail, instructorName, price } = data;
+
+                    const price = parseFloat(data.price)
+                    const availableSeats = parseFloat(availableSeats)
+
+                    const { /* availableSeats, */ className, instructorEmail, instructorName,/*  price */ } = data;
 
                     const updateData = { availableSeats, className, instructorEmail, instructorName, price, ClassImage: imgUrl, role: 'pending' }
                     axiosSecure.put(`/myClasses/update/${_id}`, updateData)

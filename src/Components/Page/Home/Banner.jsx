@@ -10,7 +10,7 @@ import img2 from '../../../assets/ban2.jpg'
 const Banner = () => {
     return (
         <Swiper
-            spaceBetween={30}
+           spaceBetween={30}
             centeredSlides={true}
             autoplay={{
                 delay: 3500,
